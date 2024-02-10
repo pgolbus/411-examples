@@ -1,0 +1,32 @@
+body {
+    background-color: #f0f0f0; /* Example background color */
+}
+
+textarea {
+    height: 100px; /* Fixed height for textarea */
+    resize: vertical; /* Allow vertical resize only */
+}
+
+.container {
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.scrollable-table {
+    height: 300px; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+
+.fixed-width-button {
+    width: 100px;
+}
+
+.cool-text {
+    font-size: xx-large;
+    font-weight: bold;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    margin-top: 50px;
+    padding-bottom: 50px;
+}

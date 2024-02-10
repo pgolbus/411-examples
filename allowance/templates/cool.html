@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aaron's Allowance</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Aaron's Allowance</h1>
+        {% if cool_type == "2" %}
+            <img src="{{ url_for('static', filename='images/fireworks.gif')}}" height="192px"/>
+        {% elif cool_type == "0" %}
+            <img src="{{ url_for('static', filename='images/sad_yoda.webp')}}" />
+        {% endif %}
+        <div class="cool-text">
+            <p>{{ description }}</p> 
+            <p>{{ not_cools }} cools</p>
+            <button class="btn fixed-width-button btn-secondary" type="button" onclick="window.location.href='/';"><strong>Back</strong></button>
+        </div>
+    </div>
+</body>
+</html>
