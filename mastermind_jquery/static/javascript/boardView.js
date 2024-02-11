@@ -1,6 +1,4 @@
 const API_URL = 'http://127.0.0.1:5000';
-const PATTERN_COLORS = ["red", "green", "blue", "yellow", "orange", "purple"];
-const SIZE = 4;
 
 /**
  * API call: POST request to reset the game.
