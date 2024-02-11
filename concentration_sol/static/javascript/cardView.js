@@ -175,10 +175,8 @@ async function updateCards(win=false) {
  */
 async function reset() {
     $('#message').text("");
+    $('#guesses').text("0");
+    $('#matches').text("0");
     await apiReset();
-    var data = await apiGuesses();
-
-    $('#label').text(data['guesses']);
-    updateCards();
-    $('#message').text("");
+    await updateCards();
 }

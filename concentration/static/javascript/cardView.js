@@ -5,20 +5,7 @@ const API_URL = 'http://127.0.0.1:5000'
  * @returns The response JSON.
  */
 async function apiReset() {
-    var url = API_URL + '/reset';
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    });
-
-    console.log('API call: /reset');
-    var data = await response.json();
-
-    return data;
+    () => undefined;
 }
 
 /**
@@ -26,20 +13,7 @@ async function apiReset() {
  * @returns The response JSON.
  */
 async function apiGuesses() {
-    var url = API_URL + '/guesses';
-
-    const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    });
-
-    console.log('API call: /guesses');
-    var data = await response.json();
-
-    return data;
+    () => undefined;
 }
 
 /**
@@ -48,22 +22,7 @@ async function apiGuesses() {
  * @returns The response JSON.
  */
 async function apiSelect(index) {
-    var url = API_URL + '/select/' + index;
-    console.log(url);
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    });
-
-    console.log('API call: /select/' + index);
-    var data = await response.json();
-    console.log(data);
-
-    return data;
-}
+    () => undefined;
 
 /**
  * API call: GET request to get card information.
@@ -72,21 +31,7 @@ async function apiSelect(index) {
  * @returns The response JSON.
  */
 async function apiCard(index) {
-    var url = API_URL + '/card/' + index;
-
-    const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    });
-
-    console.log('API call: /card/' + index);
-    var data = await response.json();
-    console.log(data);
-
-    return data;
+    () => undefined;
 }
 
 /**
@@ -95,7 +40,7 @@ async function apiCard(index) {
 $(async function () {
     // Assign to each image a function to call when clicked.
     // Specifically: select()
-    $("img").each(function (key, value) {
+    $("img").each(function (key) {
         $(this).click({index: key}, select)
     })
 
@@ -157,13 +102,13 @@ async function win(event, guesses=null) {
 /**
  * Updates cards.
  */
-async function updateCards() {
+async function updateCards(win=false) {
     $("img").each(async function (index, card) {
-        var gif = IMAGES_FOLDER + "back.gif";
+        var gif = imagePath + "back.gif";
 
         var data = await apiCard(index);
-        if (data['match'] == true || data['state'] == 'up') {
-            gif = IMAGES_FOLDER + data['card'] + ".gif";
+        if (data['match'] == true || data['state'] == 'up' || win) {
+            gif = imagePath + data['card'] + ".gif";
         }
 
         $(card).attr("src", gif);
@@ -175,10 +120,8 @@ async function updateCards() {
  */
 async function reset() {
     $('#message').text("");
+    $('#guesses').text("0");
+    $('#matches').text("0");
     await apiReset();
-    var data = await apiGuesses();
-
-    $('#label').text(data['guesses']);
-    updateCards();
-    $('#message').text("");
+    await updateCards();
 }

@@ -1,11 +1,6 @@
 from __future__ import annotations
 
-from flask import Flask, make_response, render_template, Response
-
 from concentration import CardModel
-
-
-app = Flask(__name__)
 
 
 MODEL = None
@@ -17,17 +12,11 @@ GUESSES = 0
 
 
 
-@app.route('/health', methods=['GET'])
 def health() -> Response:
     """Health check.
 
     """
-    data = {
-        'message': 'OK'
-    }
-    return make_response(data, 200)
 
-@app.route('/reset', methods=['POST'])
 def reset() -> Response:
     """Reset game.
 
@@ -41,12 +30,7 @@ def reset() -> Response:
     INDICES_UP = []
     GUESSES = 0
 
-    data = {
-        'message': 'OK'
-    }
-    return make_response(data, 200)
 
-@app.route('/card/<int:index>', methods=['GET'])
 def card(index: int) -> Response:
     """Get card info.
 
@@ -57,9 +41,6 @@ def card(index: int) -> Response:
         'state': MODEL.state[index]
     }
 
-    return make_response(data, 200)
-
-@app.route('/select/<int:index>', methods=['POST'])
 def select(index: int) -> Response:
     """Select a card.
 
@@ -77,12 +58,10 @@ def select(index: int) -> Response:
         data = {
             'message': 'Card already matched. Try again.'
         }
-        return make_response(data, 200)
     elif MODEL.state[index] == 'up':
         data = {
             'message': 'Card already selected. Try again.'
         }
-        return make_response(data, 200)
 
     state = MODEL.state
     state[index] = 'up'
@@ -104,9 +83,7 @@ def select(index: int) -> Response:
     data = {
         'message': 'OK'
     }
-    return make_response(data, 200)
 
-@app.route('/guesses', methods=['GET'])
 def get_guesses() -> Response:
     """Select a card.
     """
@@ -116,13 +93,10 @@ def get_guesses() -> Response:
         'matches': matches
     }
 
-    return make_response(data, 200)
 
-@app.route('/')
 def index():
     reset()
-    return render_template('index.html')
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    pass
