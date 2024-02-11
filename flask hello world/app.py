@@ -3,8 +3,9 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/hello')
 def main():
+    app.logger.info("Hello world")
     return "Hello World"
 
 
