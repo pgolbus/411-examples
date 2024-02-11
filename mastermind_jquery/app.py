@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from flask import Flask, jsonify, make_response, redirect, render_template, request, Response, url_for
+from flask import Flask, jsonify, make_response, render_template, request, Response
 # you could use a database to track scores over time
 
 from mastermind import MastermindModel

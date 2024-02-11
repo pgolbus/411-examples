@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.3.slim.js"
+            integrity="sha256-DKU1CmJ8kBuEwumaLuh9Tl/6ZB6jzGOBV/5YpNE2BWc=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script type="application/javascript" src="{{ url_for('static', filename='javascript/boardView.js') }}"></script>
+    </head>
+
+    <body>
+        <div style="margin-left: 30%;">
+            <table>
+                <tr>
+                    <td width="90%" align="center"><img id="face" src="{{ url_for('static', filename='assets/happy.png') }}"></td>
+                    <td><div id="moveCounter">0</div></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><div id="grid"></div></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+
+</html>
