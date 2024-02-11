@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Aaron's Allowance</title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Aaron's Allowance</h1>
+        <h1 class="text-center">{{ title }}</h1>
         <h2 class="text-center mb-4">Balance: ${{ balance }}</h2>
         <form method="post" action="enter_transaction" class="mb-3">
             <div class="form-group">
@@ -30,7 +30,7 @@
             <div style="float: right; margin-right: 80px;">
                 <button class="btn fixed-width-button btn-primary" type="submit" onclick="document.getElementById('cool_type').value='2';"><strong>Cool!</strong></button>
                 <button class="btn fixed-width-button btn-warning" type="submit" onclick="document.getElementById('cool_type').value='0';"><strong>Not Cool!</strong></button>
-                <button class="btn fixed-width-button btn-secondary" type="submit" disabled><strong>{{ not_cools }}</strong></button>
+                <button class="btn fixed-width-button btn-secondary" type="submit" disabled><strong>{{ cools }}</strong></button>
             </div>
         </form>
         <div style="height: 50px;"></div>

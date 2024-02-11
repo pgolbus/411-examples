@@ -1,3 +1,6 @@
+import os
+
+from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, url_for
 
 from utils import account_manager
@@ -6,6 +9,9 @@ from utils import account_manager
 app = Flask(__name__)
 app.logger.setLevel('INFO')
 
+
+# injects the contents of the .env file into the OS environment
+load_dotenv()
 
 @app.route('/healthcheck')
 def healthcheck():
@@ -16,10 +22,10 @@ def index():
     app.logger.info('Page accessed')
     app.logger.debug('Getting balance')
     balance = account_manager.get_balance()
-    not_cools = account_manager.get_not_cools()
+    cools = account_manager.get_cools()
     transactions = account_manager.get_transactions()
     
-    return render_template('index.html', balance=f'{balance:0.2f}', not_cools=not_cools, transactions=transactions)
+    return render_template('index.html', balance=f'{balance:0.2f}', cools=cools, transactions=transactions, title=os.getenv("TITLE"))
 
 @app.route('/cool', methods=['POST'])
 def cool():
@@ -32,9 +38,9 @@ def cool():
     transaction = account_manager.Transaction(0, int(cool_type), cool)
     app.logger.debug('Entering not cool transaction')
     account_manager.enter_transaction(transaction)
-    not_cools = account_manager.get_not_cools()
+    cools = account_manager.get_cools()
 
-    return render_template('cool.html', cool_type=cool_type, description=cool, not_cools=not_cools)
+    return render_template('cool.html', cool_type=cool_type, description=cool, cools=cools, title=os.getenv("TITLE"))
 
 @app.route('/delete', methods=['POST'])
 def delete():

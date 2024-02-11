@@ -47,14 +47,15 @@ def get_balance():
         logger.info("balance: %s", balance)
         return balance
 
-def get_not_cools():
+def get_cools():
     logger.info("getting not cools")
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute('SELECT SUM(CASE WHEN type = 0 THEN -1 WHEN type = 2 THEN 1 ELSE 0 END) FROM transactions WHERE deleted = 0;')
-        not_cools = cursor.fetchone()[0]
-        logger.info("not cools: %s", not_cools)
-        return not_cools
+        cools = cursor.fetchone()[0]
+        cools = cools if cools is not None else 0
+        logger.info("cools: %s", cools)
+        return cools
 
 
 def get_boston_time():
