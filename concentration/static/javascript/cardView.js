@@ -155,31 +155,26 @@ async function win(event, guesses=null) {
 
 
 /**
- * Updates cards.
+ * Updates the board.
  */
-async function updateCards(forceUp=false) {
-    $("img").each(async function (index, card) {
-        var gif = imagePath + "back.gif";
-
-        var data = await apiCard(index);
-        if (data['match'] == true || data['state'] == 'up' || forceUp) {
-            gif = imagePath + data['card'] + ".gif";
-        }
-
-        $(card).attr("src", gif);
-    })
+async function updateBoard() {
+    var data = await apiGuesses();
+    var guesses = data['guesses'];
+    console.log(guesses);
+    var tableElm = document.getElementById("guessesTable");
+    // clear all but the f 
+    guesses.forEach(guess => {
+        //add a row
+    });
 }
 
 /**
  * Resets the game.
  */
 async function reset() {
-    $('#message').text("");
+    $('#endGameDiv').text("");
     await apiReset();
     var data = await apiGuesses();
 
-    $('#guesses').text(data['guesses']);
-    $('#matches').text(data['matches']);
-    updateCards();
-    $('#message').text("");
+    updateBoard();
 }

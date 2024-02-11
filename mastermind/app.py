@@ -23,24 +23,6 @@ def health() -> Response:
     }
     return make_response(data, 200)
 
-@app.route('guesses', methods=['POST'])
-def guesses() -> Response:
-    """Check for a win
-    
-    """
-    data = {
-        'message': 'OK',
-        'guesses': MODEL.get_guesses(),
-        'win': MODEL.check_win(),
-        'lose': MODEL.check_lose(),
-        'guess_count': MODEL.get_guess_count,
-    }
-    return make_response(data, 200)
-
-@app.route('/lose', methods=['POST'])
-def lose() -> Response:
-
-
 @app.route('/')
 def index():
     try:
