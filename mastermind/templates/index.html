@@ -8,25 +8,7 @@
 
     <body>
         <table id="guessTable" class="moveTable">
-            <tr>
-                <td>Move</td>
-                {% for index in range(size) %}
-                    <td>Color {{ index + 1 }}</td>
-                {% endfor %}
-                <td>Correct Position</td>
-                <td>Correct Color</td>
-            </tr>
-            {% for guess in guesses %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    {% for color in guess[:size] %}
-                        <td style="background: {{ pattern_colors[color] }}"></td>
-                    {% endfor %}
-                    {% for result in guess[size:] %}
-                        <td>{{ result }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
+            
         </table>
         {% if win %}
         <div>
@@ -38,33 +20,10 @@
         </div>
         {% else %}
         <div id = selectDiv>
-            <form action="guess" method="post">
-                <table>
-                    <tr>
-                        {% for index in range(size) %}
-                            <td>Color {{ index + 1 }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        {% for index in range(size) %}
-                            <td>
-                                <select id="color{{ index + 1}}" name="color{{ index + 1 }}">
-                                    {% for color in pattern_colors %}
-                                        <option name="{{ color }}" value="{{ loop.index - 1}}">{{ color }} </option>
-                                    {% endfor %}
-                                </select>
-                            </td>
-                        {% endfor %}
-                    </tr>
-                </table>
-                <button type="submit">Guess</button>
-            </form>
+
         </div>
         {% endif %}
-            <form action="reset" method="post">
-                <button type="submit">Reset</button>
-            </form>
-        </div>
+
     </body>
 
 </html>
