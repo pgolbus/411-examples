@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from flask import Flask, make_response, redirect, render_template, request, Response, url_for
+from flask import Flask, jsonify, make_response, redirect, render_template, request, Response, url_for
 # you could use a database to track scores over time
 
 from mastermind import MastermindModel
@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 MODEL = None
 SIZE = 4
-PATTERN_COLORS = ["red", "green", "blue", "yellow", "orange", "purple"]
+PATTERN_COLORS = ["red", "green", "blue", "yellow", "orange", "purple"];
 MAX_GUESSES = 10
 SEED = 42
 
@@ -23,45 +23,45 @@ def health() -> Response:
     }
     return make_response(data, 200)
 
-@app.route('guesses', methods=['POST'])
+@app.route('/guesses', methods=['POST'])
 def guesses() -> Response:
     """Check for a win
     
     """
-    data = {
-        'message': 'OK',
-        'guesses': MODEL.get_guesses(),
-        'win': MODEL.check_win(),
-        'lose': MODEL.check_lose(),
-        'guess_count': MODEL.get_guess_count,
-    }
-    return make_response(data, 200)
-
-@app.route('/lose', methods=['POST'])
-def lose() -> Response:
-
-
-@app.route('/')
-def index():
     try:
         win = MODEL.check_win()
         lose = MODEL.check_lose()
         guess_count = MODEL.get_guess_count()
     except:
-        app.logger.info('error')
         win = False
         lose = False
         guess_count = 0
-    app.logger.info(f'win: {win}, lose: {lose}, guess_count: {guess_count}')
-    return render_template('index.html', size=SIZE, pattern_colors=PATTERN_COLORS, guesses=MODEL.get_guesses(), win=win, lose=lose, guess_count=guess_count)
+    data = {
+        'message': 'OK',
+        'guesses': MODEL.get_guesses(),
+        'win': win,
+        'lose': lose,
+        'guess_count': guess_count,
+    }
+    return jsonify(**data, status=200, mimetype='application/json')
 
-@app.route('/guess', methods=['POST'])
+@app.route('/')
+def index():
+    reset()
+    return render_template('index.html', size=SIZE, pattern_colors=PATTERN_COLORS)
+
+@app.route('/guess', methods=['GET'])
 def guess() -> Response:
     app.logger.info('Guessing.')
-    app.logger.info(request.form)
-    guess = list([int(color) for color in request.form.values()])
-    MODEL.guess(guess)
-    return redirect(url_for('index'))
+    colors = list([int(color) for color in request.args.to_dict().values()])
+    app.logger.info(colors)
+                    
+    MODEL.guess(colors)
+    app.logger.info(MODEL.get_guesses())
+    data = {
+        'message': 'Guess.'
+    }
+    return make_response(data, 200)
 
 @app.route('/reset', methods=['POST'])
 def reset() -> Response:
@@ -77,16 +77,12 @@ def reset() -> Response:
                             len(PATTERN_COLORS),
                             MAX_GUESSES,  
                             seed=SEED)
-
+    app.logger.info(MODEL)
 
     data = {
         'message': 'Game reset.'
     }
-    return redirect(url_for('index'))
+    return make_response(data, 200)
 
 if __name__ == '__main__':
-    MODEL = MastermindModel(SIZE,
-                            len(PATTERN_COLORS),
-                            MAX_GUESSES,
-                            seed=SEED)
     app.run(host='0.0.0.0', port=5000, debug=True)
