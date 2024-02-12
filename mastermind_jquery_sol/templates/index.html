@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.3.slim.js"
+            integrity="sha256-DKU1CmJ8kBuEwumaLuh9Tl/6ZB6jzGOBV/5YpNE2BWc=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script type="application/javascript" src="{{ url_for('static', filename='javascript/boardView.js') }}"></script>
+    </head>
+
+    <body>
+        <table id="guessesTable">
+            <tr>
+                <td>Move</td>
+                {% for index in range(size) %}
+                    <td>Color {{ index + 1 }}</td>
+                {% endfor %}
+                <td>Correct Position</td>
+                <td>Correct Color</td>
+            </tr>
+        </table>
+        <div id="selectDiv">
+            <table id="selectTable">
+                <tr>
+                    {% for index in range(size) %}
+                        <th>Color {{ index + 1 }}</th>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for index in range(size) %}
+                        <td>
+                            <select id="color{{ index + 1}}" name="color{{ index + 1 }}">
+                                {% for color in pattern_colors %}
+                                    <option name="{{ color }}" value="{{ loop.index - 1}}">{{ color }} </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </table>
+            <button id="guessButton">Guess</button>
+        </div>
+        <div id="endGameDiv"></div>
+        <div id="resetDiv">
+            <button id="resetButton">Reset</button>
+        </div>
+        <script type="application/javascript">
+            const PATTERN_COLORS = {{ pattern_colors | safe }};
+            const SIZE = {{ size }};
+        </script>
+    </body>
+
+</html>
