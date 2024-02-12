@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.3.slim.js"
+            integrity="sha256-DKU1CmJ8kBuEwumaLuh9Tl/6ZB6jzGOBV/5YpNE2BWc=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script type="application/javascript" src="{{ url_for('static', filename='javascript/cardView.js') }}"></script>
+    </head>
+
+    <body>
+        <main>
+            <table id="cards">
+                {% for row in range(4) %}
+                <tr>
+                    {% for col in range(13) %}
+                    <td>
+                        <img src="{{ url_for('static', filename='images/back.gif') }}">
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+
+            <div class="text">
+                Guesses: <span class="stats" id="guesses">0</span> Matches: <span class="stats" id="matches">0</span>
+            </div>
+            <div>
+                <button class="btn btn-primary text" id="resetButton">New Game</button>
+                <button class="btn btn-secondary text" id="winButton">Test Win</button>
+            </div>
+            <div id="message"></div>
+        </main>
+
+        <script type="application/javascript">
+            var imagePath = "{{ url_for('static', filename='images/') }}";
+        </script>
+    </body>
+
+</html>
